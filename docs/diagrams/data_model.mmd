@@ -1,0 +1,28 @@
+graph TD
+    HDF5["HDF5 Files<br/>(udip_data/datasets)"]
+    CSV["CSV/JSON/Parquet<br/>(udip_data/datasets)"]
+    Upload["Upload by User<br/>(pages/upload.py)"]
+    
+    HDF5 -->|load_dataset| Loader["DatasetLoader<br/>(execution_layer)"]
+    CSV -->|load_dataset| Loader
+    Upload -->|save| Loader
+    
+    Loader -->|_read_hdf5 or<br/>pd.read_*| NormDF["Normalized DataFrame<br/>(Pandas)"]
+    NormDF -->|store in| SessionMem["Session Memory<br/>(st.session_state)"]
+    
+    SessionMem -->|Pipeline→PipelineRunner| Transform["Transformation<br/>(science modules)"]
+    Transform -->|Updated DataFrame| SessionMem
+    
+    SessionMem -->|Visualization| Render["Render to UI<br/>(pages/visualize.py)"]
+    SessionMem -->|Export| Export["Save to<br/>Parquet/CSV/HDF5"]
+    
+    Export -->|Optional| HDF5
+    Render -->|Display| User["User"]
+    
+    style HDF5 fill:#e3f2fd
+    style CSV fill:#e3f2fd
+    style NormDF fill:#fff9c4
+    style SessionMem fill:#c8e6c9
+    style Transform fill:#ffccbc
+    style Render fill:#f8bbd0
+    style Export fill:#e1bee7

@@ -1,0 +1,8 @@
+graph LR
+    User["User Uploads File"] -->|Browser Widget| Upload["Upload Handler<br/>(pages/upload.py)"]
+    Upload -->|Check: size, format| Validate["Validation"]
+    Validate -->|Pass| Move["Move to<br/>udip_data/datasets/"]
+    Validate -->|Fail| Error["Show Error<br/>to User"]
+    Move -->|Register| Registry["Dataset Registry<br/>(st.session_state)"]
+    Registry -->|load_dataset| Load["Load into<br/>Memory"]
+    Load -->|Store in| Session["st.session_state['datasets']"]

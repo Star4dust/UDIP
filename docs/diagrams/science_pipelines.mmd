@@ -1,0 +1,21 @@
+graph LR
+    Load["Load HIRAX Data"] --> RFI["Detect RFI"]
+    RFI --> Clean["Clean RFI"]
+    Clean --> Cal["Calibrate Signal"]
+    Cal --> Window["Apply Window"]
+    Window --> FFT["Compute FFT"]
+    FFT --> Power["Power Spectrum"]
+    Power --> Peaks["Detect Peaks"]
+    Peaks --> Classify["Classify Signal"]
+    Classify --> Report["Generate Report"]
+    
+    style Load fill:#e1f5ff
+    style RFI fill:#fff3e0
+    style Clean fill:#fff3e0
+    style Cal fill:#f3e5f5
+    style Window fill:#f3e5f5
+    style FFT fill:#f3e5f5
+    style Power fill:#f3e5f5
+    style Peaks fill:#e8f5e9
+    style Classify fill:#e8f5e9
+    style Report fill:#fce4ec

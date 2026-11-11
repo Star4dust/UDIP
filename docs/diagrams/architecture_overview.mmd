@@ -1,0 +1,15 @@
+graph TD
+    UI["🖥️ Streamlit UI Layer<br/>(pages/, udip_pages/)"] 
+    PB["🔧 Pipeline Builder<br/>(modules/pipeline_builder.py)"]
+    PR["⚙️ Pipeline Runner<br/>(modules/pipeline_runner.py)"]
+    EL["🏗️ Execution Layer<br/>(modules/execution_layer.py)"]
+    SC["🧬 Scientific Modules<br/>(hirax_*, radio_*, feature_*)"]
+    OUT["📊 Outputs & Visualizations"]
+    
+    UI -->|Build visual pipeline| PB
+    PB -->|Convert to execution plan| PR
+    PR -->|Validate & dispatch steps| EL
+    EL -->|Load/save/compute| SC
+    SC -->|Return results| EL
+    EL -->|Structured output| UI
+    UI -->|Render| OUT

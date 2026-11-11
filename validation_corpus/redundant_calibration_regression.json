@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "description": "Deterministic regression fixtures for redundant baseline calibration and per-frequency gain solver. All values are reproducible to ~1e-9 with numpy>=1.24.",
+  "fixtures": [
+    {
+      "id": "hirax_8dish_grid_2groups",
+      "description": "8-element regular grid with 2 redundant groups of size 3",
+      "antenna_positions": [
+        [0.0, 0.0, 0.0],
+        [6.0, 0.0, 0.0],
+        [12.0, 0.0, 0.0],
+        [18.0, 0.0, 0.0],
+        [0.0, 6.0, 0.0],
+        [6.0, 6.0, 0.0],
+        [12.0, 6.0, 0.0],
+        [18.0, 6.0, 0.0]
+      ],
+      "baseline_pairs": [
+        [0, 1], [1, 2], [2, 3], [4, 5], [5, 6], [6, 7], [0, 4], [1, 5]
+      ],
+      "expected_group_sizes": [3, 3, 1, 1],
+      "expected_redundancy_factor": 3,
+      "expected_n_redundant_baselines": 6,
+      "tolerance_m": 0.5
+    },
+    {
+      "id": "single_baseline_no_redundancy",
+      "description": "No redundant baselines",
+      "antenna_positions": [[0, 0, 0], [6, 0, 0], [12, 0, 0]],
+      "baseline_pairs": [[0, 1], [0, 2], [1, 2]],
+      "expected_group_sizes": [1, 1, 1],
+      "expected_redundancy_factor": 1,
+      "expected_n_redundant_baselines": 0,
+      "tolerance_m": 0.5
+    },
+    {
+      "id": "per_frequency_gain_recovery",
+      "description": "Synthetic 8-frequency chain: known g(ν) = 1.0 + 0.1j + 0.01*ν, recovered to 1e-3",
+      "n_freq": 8,
+      "true_gain_real": [1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07],
+      "true_gain_imag": [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17],
+      "noise_sigma": 0.01,
+      "expected_gain_recovery_tol": 0.02,
+      "frequencies_mhz": [700.0, 710.0, 720.0, 730.0, 740.0, 750.0, 760.0, 770.0]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "description": "Tiny deterministic HIRAX-style regression corpus for observatory validation.",
+  "datasets": [
+    {
+      "id": "clean_observation",
+      "category": "clean observations",
+      "file": "clean_observation.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Physically reasonable outputs with stable uv, closure, calibration, and RFI diagnostics.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "noisy_observation",
+      "category": "noisy observations",
+      "file": "noisy_observation.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Outputs remain physically reasonable but with higher noise floor and reduced confidence.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "rfi_heavy_session",
+      "category": "rfi-heavy sessions",
+      "file": "rfi_heavy_session.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Persistent contamination should be flagged while session reconstruction remains stable.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "malformed_metadata",
+      "category": "malformed metadata",
+      "file": "malformed_metadata.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 0,
+        "n_baselines": 0,
+        "has_uv_coordinates": false,
+        "has_calibration_metadata": false,
+        "has_timestamp": false
+      },
+      "expected_scientific_behavior": "Malformed metadata should be quarantined safely without silent repair.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "missing_uv_geometry",
+      "category": "missing uv geometry",
+      "file": "missing_uv_geometry.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": false,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Missing uv geometry should trigger warnings and disable uv-dependent diagnostics.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "partial_calibration_drift",
+      "category": "partial calibration drift",
+      "file": "partial_calibration_drift.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Calibration summaries should show drift but remain numerically stable.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "closure_inconsistency",
+      "category": "closure inconsistencies",
+      "file": "closure_inconsistency.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Closure stability should degrade while the file remains readable.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    },
+    {
+      "id": "polarization_inconsistency",
+      "category": "polarization inconsistencies",
+      "file": "polarization_inconsistency.h5",
+      "observation_metadata_summary": {
+        "instrument": "HIRAX",
+        "n_antennas": 4,
+        "n_baselines": 4,
+        "has_uv_coordinates": true,
+        "has_calibration_metadata": true,
+        "has_timestamp": true
+      },
+      "expected_scientific_behavior": "Polarization mismatches should surface as consistency warnings.",
+      "preferred_dataset_path": "visibilities",
+      "target_freq_bins": 32
+    }
+  ]
+}

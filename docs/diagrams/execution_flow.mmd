@@ -1,0 +1,47 @@
+sequenceDiagram
+    participant User
+    participant UI as Streamlit UI
+    participant PB as Pipeline Builder
+    participant PR as Pipeline Runner
+    participant EL as Execution Layer
+    participant SCI as Science Modules
+    participant SO as System Observer
+
+    User->>UI: Trigger analysis (button click)
+    
+    Note over UI: Option 1: Visual Pipeline
+    UI->>PB: Build pipeline with nodes
+    PB->>PB: Topological sort for execution order
+    PB->>PB: Convert nodes to execution_plan
+    PB->>PR: send plan dict
+    
+    Note over UI: Option 2: Direct call
+    UI->>EL: Call operation directly (e.g., load_dataset)
+    
+    Note over PR: Execution Phase
+    PR->>PR: Validate plan structure
+    PR->>PR: Validate ALLOWED_ACTIONS
+    
+    loop For each step in execution_plan
+        PR->>SO: Log step started
+        PR->>EL: Dispatch action with parameters
+        EL->>EL: wrap_execution decorator
+        
+        alt Action requires computation
+            EL->>SCI: Call scientific function
+            SCI->>SCI: Perform analysis
+            SCI-->>EL: Return results
+        else Action is data operation
+            EL->>EL: load/save/query dataset
+        end
+        
+        EL-->>PR: Return {"success": bool, "output": Any, "error": str}
+        PR->>SO: Log step completed
+        PR->>PR: Update execution_logs
+        PR->>PR: Forward output to next step (if applicable)
+    end
+    
+    PR-->>UI: Return aggregated results
+    UI->>UI: Update st.session_state
+    UI->>UI: Render visualizations/tables
+    UI-->>User: Display output

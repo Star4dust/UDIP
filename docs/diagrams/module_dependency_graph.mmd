@@ -1,0 +1,77 @@
+graph TD
+    APP["app.py<br/>(Entry Point)"]
+    CORE["modules/core.py<br/>(Foundation)"]
+    
+    APP -->|Import all| CORE
+    APP -->|Pages| PAGES["pages/<br/>udip_pages/"]
+    
+    PAGES -->|All use| CORE
+    PAGES -->|Execution| EL["modules/execution_layer.py"]
+    PAGES -->|Orchestration| PR["modules/pipeline_runner.py"]
+    PAGES -->|UI Builder| PB["modules/pipeline_builder.py"]
+    
+    subgraph "Core Infrastructure"
+        CORE
+        EL
+        PR
+        PB
+    end
+    
+    EL -->|Data ops| DM["modules/dataset_memory.py"]
+    EL -->|Metadata| SHDF5["modules/scientific_hdf5.py"]
+    EL -->|Logging| SO["modules/system_observer.py"]
+    EL -->|Tracking| ET["modules/experiment_tracker.py"]
+    
+    PR -->|Calls| EL
+    PR -->|Radio analysis| RI["modules/radio_interferometry.py"]
+    PR -->|HIRAX analysis| HA["modules/hirax_analysis.py"]
+    PR -->|HIRAX processing| HP["modules/hirax_processing.py"]
+    PR -->|Data ops| DfM["modules/data_fusion.py"]
+    PR -->|Features| FA["modules/feature_alchemy.py"]
+    PR -->|Observations| OI["modules/observatory_intelligence.py"]
+    PR -->|AI| AIE["modules/ai_engine.py"]
+    
+    PB -->|Visual nodes| PR
+    
+    subgraph "Science & Analysis"
+        RI
+        HA
+        HP
+        FA
+        DfM
+    end
+    
+    subgraph "Intelligence & Output"
+        OI
+        AIE
+    end
+    
+    RI -->|Baseline analysis| HA
+    HA -->|Uses| HP
+    OI -->|Synthesis| RI
+    OI -->|Synthesis| HA
+    AIE -->|Integration| SO
+    
+    subgraph "Orphaned (Unused)"
+        ORD1["hirax_elite_enhancer.py"]
+        ORD2["performance_elite.py"]
+        ORD3["state_perfection.py"]
+        ORD4["execution_reliability.py"]
+    end
+    
+    style APP fill:#e8f5e9
+    style CORE fill:#fff9c4
+    style EL fill:#ffe0b2
+    style PR fill:#ffe0b2
+    style PB fill:#ffe0b2
+    style RI fill:#bbdefb
+    style HA fill:#bbdefb
+    style HP fill:#bbdefb
+    style FA fill:#bbdefb
+    style DfM fill:#bbdefb
+    style OI fill:#f8bbd0
+    style AIE fill:#f8bbd0
+    style ORD1 fill:#ffcccc
+    style ORD2 fill:#ffcccc
+    style ORD3 fill:#ffcccc
+    style ORD4 fill:#ffcccc
