@@ -58,6 +58,8 @@ validation_corpus/  Small synthetic regression datasets
 docs/             Architecture notes
 installer/        Windows installer scripts
 ```
+## How this was built
+UDIP was developed with AI coding assistants. I defined the requirements and architecture, then tested and debugged it.
 
 ## Known limitations
 - Windows-focused: the installer, launcher and tray integration assume Windows.
